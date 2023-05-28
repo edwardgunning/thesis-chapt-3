@@ -10,4 +10,3 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Summary
 
 This repository contains the code for Chapter 3 of Edward Gunning's thesis.
-
