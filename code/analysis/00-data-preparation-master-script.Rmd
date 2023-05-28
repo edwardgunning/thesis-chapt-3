@@ -1,0 +1,105 @@
+---
+title: "Master Script Markdown"
+author: "Edward Gunning"
+date: "2023-05-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Set up ------------------------------------------------------------------
+library(data.table) # CRAN v1.14.0 
+
+# And adjust printing settings:
+# Plus nice setup options for printing (like tibble):
+options(datatable.print.class = TRUE,
+        datatable.print.keys = TRUE)
+
+# And variable for set up code paths
+code_folder_path <- here::here("code", "analysis")
+
+# ------------------------------------------------------------------------#
+# Part 1
+# Initial read in and clean of risc1 kinematic data.
+# ------------------------------------------------------------------------#
+
+# (Optional) --------------------------------------------------------------
+# Script to download data from google drive into "data" folder in project
+
+# (commented out for now)
+
+# source(file = file.path(code_folder_path))
+
+# Read in risc1 data ------------------------------------------------------
+# This is a large file and can take a small bit of time
+# usually < 20 seconds.
+source(file = file.path(code_folder_path, "02-risc1-data-import.R"))
+
+# Read in Screen Index Data -----------------------------------------------
+source(file = file.path(code_folder_path, "03-screen-index-data-import.R"))
+
+# Very basic checks and cleaning of both datasets -------------------------
+source(file = file.path(code_folder_path, "04-initial-data-clean.R"))
+
+# Remove participants whose entire data are invalid -----------------------
+# These are participants whose data should be removed completely
+# this will also write a csv file to the outputs folder
+# of the participant IDs and number of rows being removed
+source(file = file.path(code_folder_path, "05-exclude-participants.R"))
+
+# Script that investigates screen index dataset more closely --------------
+# This script doesn't actually modify the dataset but there are some checks
+# in it so we will run it anyway.
+source(file = file.path(code_folder_path, "06-second-data-clean.R"))
+
+# Script that investigates number of observations per trial ---------------
+# Checks number of rows for each stride for each subject
+# Again, doesn't modify the data set but does some checks so 
+# compute
+source(file = file.path(code_folder_path,
+                        "07-investigate-observations-per-trial.R"))
+
+# Script that checks whether each stride is unique ------------------------
+# Does this by matching frame numbers (which indicate the start of a new
+# trial) with stride ID
+# Again, doesn't modify data set but does checks and was used to find 
+# P_4066 (removed in script 5) who had duplicates
+source(file = file.path(code_folder_path,
+                        "08-investigate-removing-frame-number.R"))
+
+
+# Script to remove frame number variables in screen index -----------------
+# the frame number discrepancies in the screen index dataset are
+# simply a result of manual input, and can be ignored
+# However, it is still worthwhile to save them
+# This script removes them from the screen index dataset but also
+# writes to output folder a csv containing any discrepancies.
+source(file = file.path(code_folder_path,
+                        "09-screen-index-frame-numbers.R"))
+
+# Clean variables ---------------------------------------------------------
+# This script uses custom functions to perform
+# important parts of the data cleaning
+# Using custom functions, its splits larger string variables
+# into sensibly named smaller variables.
+# then, it converts/ checks the class of the variables.
+source(file = file.path(code_folder_path,
+                        "10-third-data-clean.R"))
+
+
+# ------------------------------------------------------------------------#
+# Part 2
+# Initial read in and clean injury data sets
+# ------------------------------------------------------------------------#
+
+
+# Read in prospective only injury data  -----------------------------------
+# We only ended up using this data for cross checking more comprehensive
+# injury data (i.e., prospective and retrospective) that arrived
+source(file = file.path(code_folder_path,
+                        "11-injury-data-import-and-clean.R"))
+
+```
