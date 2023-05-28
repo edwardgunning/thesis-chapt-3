@@ -1,0 +1,13 @@
+---
+title: "Edward Gunning Thesis Chapter 3"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Summary
+
+This repository contains the code for Chapter 3 of Edward Gunning's thesis.
+
