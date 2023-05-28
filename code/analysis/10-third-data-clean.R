@@ -117,6 +117,11 @@ fwrite(risc1_dt, file = here::here("outputs",
                                    "data",
                                    "risc1_intermediate_copy_01.R"))
 
+# Save an intermediate copy of the data:
+fwrite(screen_index, file = here::here("outputs",
+                                   "data",
+                                   "screen_index_intermediate_copy_01.R"))
+
 # finished
 
 
