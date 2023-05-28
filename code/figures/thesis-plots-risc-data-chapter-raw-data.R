@@ -23,7 +23,7 @@ options(scipen = 999)
 
 risc1_dt <- fread(file = here::here("outputs",
                                            "data",
-                                           "risc1_intermediate_copy_01.R"))
+                                           "risc1_intermediate_copy_01.csv"))
 
 
 

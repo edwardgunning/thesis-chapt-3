@@ -115,12 +115,12 @@ dim(screen_index)
 # Save an intermediate copy of the data:
 fwrite(risc1_dt, file = here::here("outputs",
                                    "data",
-                                   "risc1_intermediate_copy_01.R"))
+                                   "risc1_intermediate_copy_01.csv"))
 
 # Save an intermediate copy of the data:
 fwrite(screen_index, file = here::here("outputs",
                                    "data",
-                                   "screen_index_intermediate_copy_01.R"))
+                                   "screen_index_intermediate_copy_01.csv"))
 
 # finished
 
