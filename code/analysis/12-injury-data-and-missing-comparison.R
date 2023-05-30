@@ -12,12 +12,12 @@ injury_rds_path <- here::here(
 
 injury_data <- readRDS(injury_rds_path)
 
-risc1_dt <- fread(file = here::here("outputs",
-                                    "data",
-                                    "risc1_intermediate_copy_01.csv"))
-screen_index <- fread(file = here::here("outputs",
-                                    "data",
-                                    "screen_index_intermediate_copy_01.csv"))
+# risc1_dt <- fread(file = here::here("outputs",
+#                                     "data",
+#                                     "risc1_intermediate_copy_01.csv"))
+# screen_index <- readRDS(file = here::here("outputs",
+#                                     "data",
+#                                     "screen_index_intermediate_copy_01.rds"))
 
 # Data Wrangling ----------------------------------------------------------
 

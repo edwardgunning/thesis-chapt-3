@@ -171,4 +171,3 @@ saveRDS(object = risc1_basis_coef,
         file = here::here(
           sharing_data_folder,
           "risc1-cleaned-basis-coef.rds"))
-

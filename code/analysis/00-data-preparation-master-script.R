@@ -138,8 +138,8 @@ source(
 
 # Remove flagged strides from risc1 dataset -------------------------------
 # if a stride is flagged in screen index dataset, remove from risc1
-# also creates a csv in ouptuts file of some subjects who are of interest
-# beacuase they appear in eithert the injury or screen index datasets
+# also creates a csv in outputs file of some subjects who are of interest
+# beacuase they appear in either the injury or screen index datasets
 # but not the risc1.
 # Although, for now, we didn't manage to follow these up with shane
 

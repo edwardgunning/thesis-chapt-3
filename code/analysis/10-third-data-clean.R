@@ -117,10 +117,18 @@ fwrite(risc1_dt, file = here::here("outputs",
                                    "data",
                                    "risc1_intermediate_copy_01.csv"))
 
+# saveRDS(risc1_dt, file = here::here("outputs",
+#                                     "data",
+#                                     "risc1_intermediate_copy_01.rds"))
+
 # Save an intermediate copy of the data:
 fwrite(screen_index, file = here::here("outputs",
                                    "data",
                                    "screen_index_intermediate_copy_01.csv"))
+
+saveRDS(screen_index, file = here::here("outputs",
+                                       "data",
+                                       "screen_index_intermediate_copy_01.rds"))
 
 # finished
 

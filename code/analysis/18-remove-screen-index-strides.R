@@ -1,8 +1,23 @@
 # Make table to compare subjects ------------------------------------------
+
+
+# Summary stat: -----------------------------------------------------------
+n_subjects <- risc1_dt[, uniqueN(subject_id)]
+n_strides_remove <- risc1_dt[trial_id %in% screen_index[, unique(observation)],
+         uniqueN(trial_id)]
+n_strides_total <- risc1_dt[, uniqueN(trial_id)]
+info_dt <- data.table(n_strides_remove = n_strides_remove,
+           n_strides_total = n_strides_total,
+           n_subjects = n_subjects)
+info_dt[, pc_remove := 100 * (n_strides_remove/n_strides_total)]
+
+
 # in the risc1 data, screen index and injury data:
 # good to do before we remove based on screen index...
 risc1_dt_binary <- risc1_dt[, .(subject_id = unique(subject_id))]
 risc1_dt_binary[, risc1 := TRUE]
+
+
 
 screen_index_binary <- screen_index[, .(subject_id = unique(subject_id))]
 screen_index_binary[, screen_index := TRUE]
@@ -65,6 +80,9 @@ fwrite(cross_check_dt[retro_injury_non_na == TRUE & risc1 == FALSE &
                         !(subject_id %in% c("P_4066", "P_4060", "P_4210", "P_4234"))], 
        file = cross_check_interest_dt_path)
 
+
+
+
 # Remove participant completely from risc1 if they have > 70% miss --------
 
 # From Shane and Kieran:
@@ -111,7 +129,7 @@ risc1_dt[subject_id %in% subject_ids_70pc,
 # ok... drop these two participants.
 risc1_dt <- risc1_dt[!(subject_id %in% subject_ids_70pc)]
 
-risc1_dt[, .N]
+(risc1_dt[, .N])
 
 
 
@@ -123,6 +141,8 @@ risc1_dt[, .N]
 # How many strides will be removed?
 (n_removed_screen_index <- risc1_dt[trial_id %in% screen_index[, unique(observation)],
          uniqueN(trial_id)])
+
+n_strides_before_screen_index <- risc1_dt[, uniqueN(trial_id)]
 
 
 # Show what anti-join does
@@ -141,10 +161,17 @@ stopifnot(
 risc1_dt <- risc1_dt[!screen_index,
                      on = .(trial_id = observation)]
 
+info_dt$n_final <- risc1_dt[, uniqueN(trial_id)]
+fwrite(info_dt, file = here::here("outputs",
+                                   "data",
+                                   "info_N.csv"))
 
 # Save an intermediate copy of the data:
 fwrite(risc1_dt, file = here::here("outputs",
                                    "data",
                                    "risc1_intermediate_copy_02.csv"))
+# saveRDS(risc1_dt, file = here::here("outputs",
+#                                     "data",
+#                                     "risc1_intermediate_copy_02.rds"))
 
 
