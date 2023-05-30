@@ -1,3 +1,8 @@
+# -------------------------------------------------------------------------
+# This script contains the smoothing experiment for speed contained 
+# in Chapter 3.3.3 of the Thesis.
+# -------------------------------------------------------------------------
+
 # Get latest version of risc1 data set
 library(data.table) # CRAN v1.14.2
 library(ggplot2)

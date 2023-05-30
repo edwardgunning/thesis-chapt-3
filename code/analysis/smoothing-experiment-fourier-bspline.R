@@ -1,7 +1,16 @@
-# Source necessary files --------------------------------------------------
+# ------------------------------------------------------------------------#
+# This script performs the experiment in Chapter 3.3.2 of the Thesis
+# to choose between B-spline and Fourier basis expansions for the RISC
+# data. 
+# ------------------------------------------------------------------------#
+
+
+# Packages: ---------------------------------------------------------------
 library(data.table) # CRAN v1.14.2
 library(ggplot2)    # CRAN v3.4.0
 library(tikzDevice) # CRAN v0.12.3.1
+
+# Source necessary files --------------------------------------------------
 source(file = here::here("code",
                          "functions",
                          "functions-helper-smoothing.R"))
@@ -9,6 +18,9 @@ source(file = here::here("code",
                          "functions",
                          "functions-get-mse.R"))
 source(here::here("code", "functions", "theme_gunning.R"))
+
+
+# Plot Settings: ----------------------------------------------------------
 plots_path <- here::here("outputs", "plots")
 theme_gunning()
 theme_update(strip.text = element_text(size = 9),
@@ -52,8 +64,6 @@ strides_sample_dt <- strides_subject_dt[,
                                         .(chosen_stride = trial_id[sample(1:.N, size = 1)]),
                                         by = subject_id]
 
-
-# From this data set, again just sample a small number of subjects --------
 sample_dt <- risc1_dt[strides_sample_dt[sample(1:.N, size = .N)],
                       on = .(subject_id, trial_id = chosen_stride),
                       nomatch = 0]
@@ -178,6 +188,6 @@ smooth_bspline <- smooth.basis(argvals = t_grid, y = y, fdParobj = fdPar(fdobj =
 plot(smooth_fourier$fd - smooth_bspline$fd)
 plot(eval.fd(t_grid, smooth_fourier$fd)[,1] - y, type = "l")
 lines(eval.fd(t_grid, smooth_bspline$fd)[,1] - y, col = 2)
-# Especially at endpoints...
+# Especially clear at endpoints...
 
 
