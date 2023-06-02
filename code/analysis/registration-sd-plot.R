@@ -34,7 +34,7 @@ reg_plot <- ggplot(plot_sds_dt_lng) +
   aes(x = t_grid, y = sd, group = registered, color = registered) +
   facet_wrap(location ~ plane_of_motion, ncol = 3, scales = "free_y") +
   geom_line() +
-  labs(x = "Normalised Time (% of Stride)", y = "Standard Deviation") +
+  labs(x = "Normalised Time ($\\%$ of Stride)", y = "Standard Deviation") +
   scale_color_hue(name = "", h = c(5, 250)) +
   theme(legend.position = "bottom")
 

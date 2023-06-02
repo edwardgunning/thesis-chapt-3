@@ -59,9 +59,12 @@ boxplot_choose_k <- ggplot(data = plot_mses_dt_trimmed[quantity == "Angles" & lo
 boxplot_choose_k
 tikz(file.path(plots_path, "choose-k-boxplots.tex"),
      width = 0.8 * doc_width_inches, 
-     height = 0.9 *  doc_width_inches)
+     height = 0.9 *  doc_width_inches, standAlone = TRUE)
 boxplot_choose_k
 dev.off()
+
+?tinytex::latexmk
+tinytex::lualatex(file = file.path(plots_path, "choose-k-boxplots.tex"))
 
 plot_mses_dt_trimmed[location=="Ankle" & plane_of_motion == "rot" & quantity == "Angles" & n_basis==55][rev(order(mse))][1:10]
 weird_stride <- unlist(risc1_dt[subject_id == "P_4117" & side == "right" & stride_num == 63 & location == "Ankle" & quantity == "Angles" &

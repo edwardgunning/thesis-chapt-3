@@ -152,11 +152,13 @@ pbottom <-  ggplot(data = subset_dt_lng) +
   labs(y = "Angle ($^{\\circ}$)", x = "Time (seconds)") +
   scale_x_continuous(expand = c(0.025, 0.025))
 
-ggarrange(ptop, pbottom, ncol = 1, nrow = 2, heights = c(0.6, 0.35))
-
+combined_plot <- ggarrange(ptop, pbottom, ncol = 1, nrow = 2, heights = c(0.6, 0.35), labels = c(
+  "\\textbf{(a)}", "\\textbf{(b)}"
+), label.x = c(0.01, 0.01), label.y = c(0.98, 0.98), font.label = list(size = 9.5))
+combined_plot
 tikz(file.path(plots_path, "segmented-data.tex"),
      width = 1 * doc_width_inches, 
      height = 0.95 *  doc_width_inches)
-ggarrange(ptop, pbottom, ncol = 1, nrow = 2, heights = c(0.6, 0.35))
+combined_plot
 dev.off()
 
