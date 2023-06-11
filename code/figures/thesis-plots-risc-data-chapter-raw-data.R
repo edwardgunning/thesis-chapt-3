@@ -97,7 +97,7 @@ subset_dt <- risc1_dt[
   subject_id == "P_4001" & side == "right" &
     quantity == "Angles" &
     plane_of_motion == "fle" &
-    stride_num %in% 1:10 &
+    stride_num %in% 1:11 &
     location %in% c("Hip", "Knee", "Ankle") 
 ]
 subset_dt <- subset_dt[, c("stride_num", "location", paste0("data_", 0:197))]
@@ -134,7 +134,7 @@ theme_update(strip.text = element_text(size = 9),
              legend.position = "none",
              legend.title = element_text(size = 9, hjust = 0.5),
              plot.title = element_text(hjust = 0.5, size = 11))
-ptop <- ggplot(data = subset_dt_lng) +
+ptop <- ggplot(data = subset_dt_lng[stride_num %in% 1:10]) +
   aes(x = seconds, y = angle, colour = factor(stride_num)) +
   facet_wrap(~ location, nrow = 3, ncol = 1, "free_y") +
   geom_point(col = "black", size = 0.075)+
