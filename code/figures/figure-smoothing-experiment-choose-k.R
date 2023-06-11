@@ -27,8 +27,11 @@ plot_mses_dt[,plane_of_motion := factor(plane_of_motion,
 
 plot_mses_dt[, location := factor(location, levels = c("Hip", "Knee", "Ankle"))]
 
+plot_mses_dt[, k_80 := fifelse(test = n_basis == 80, TRUE, FALSE)]
 
-# "P_4213" & side == "right" & stride_num == 83?
+
+# These observations have little kinks/jumps in them that make them large outliers for smoothing.
+# + "P_4213" & side == "right" & stride_num == 83?
 plot_mses_dt_trimmed <- plot_mses_dt[!((subject_id == "P_4230" & side == "left" & stride_num == 63) |
                                          (subject_id == "P_4117" & side == "right" & stride_num == 63) |
                                          (subject_id == "P_4121" & side == "left" & stride_num %in% c(70, 71))|
@@ -40,12 +43,12 @@ plot_mses_dt_trimmed <- plot_mses_dt[!((subject_id == "P_4230" & side == "left" 
 
 
 boxplot_choose_k <- ggplot(data = plot_mses_dt_trimmed[quantity == "Angles" & location %in% c("Hip", "Knee", "Ankle")]) +
-  geom_vline(xintercept = c(60, 80, 100), col = "grey", lty = "dashed")+
+  # geom_vline(xintercept = c(60, 80, 100), col = "grey", lty = "dashed")+
   aes(x = n_basis,
       y = rmse,
-      colour = factor(n_basis),
+      colour = k_80,
       group = n_basis) +
-  geom_vline(xintercept = 80, color = "darkgrey") +
+  # geom_vline(xintercept = 80, color = "darkgrey") +
   geom_boxplot(outlier.size = 0.1) +
   facet_wrap(location ~ plane_of_motion,
              scales = "free_y",
@@ -54,19 +57,18 @@ boxplot_choose_k <- ggplot(data = plot_mses_dt_trimmed[quantity == "Angles" & lo
        x = "Number of Basis Functions ($K$)",
        color = "$K$:")  +
   theme(legend.position = "bottom") +
-  guides(colour = guide_legend(nrow = 2))
+  scale_color_manual(values = c("darkgrey", "red4")) +
+  guides(colour = guide_legend(nrow = 2)) +
+  theme(legend.position = "none")
 
 boxplot_choose_k
+
 tikz(file.path(plots_path, "choose-k-boxplots.tex"),
      width = 0.8 * doc_width_inches, 
-     height = 0.9 *  doc_width_inches, standAlone = TRUE)
+     height = 0.8 *  doc_width_inches, standAlone = TRUE)
 boxplot_choose_k
 dev.off()
 
-?tinytex::latexmk
 tinytex::lualatex(file = file.path(plots_path, "choose-k-boxplots.tex"))
 
-plot_mses_dt_trimmed[location=="Ankle" & plane_of_motion == "rot" & quantity == "Angles" & n_basis==55][rev(order(mse))][1:10]
-weird_stride <- unlist(risc1_dt[subject_id == "P_4117" & side == "right" & stride_num == 63 & location == "Ankle" & quantity == "Angles" &
-                                  plane_of_motion == "fle", data_0:data_197])
 
