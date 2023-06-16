@@ -100,7 +100,7 @@ risc1_basis_coef[, uniqueN(peak_kfa_time)]
 
 
 N_sim <- 50
-M <- 10^seq(0, 2)
+M <- c(1, seq(50, 250, by = 50))
 time_df <- expand.grid(sim_rep = seq_len(N_sim), M = M) 
 time_df$time_1 <- time_df$time_2  <- NA
 N_sim_total <- nrow(time_df)

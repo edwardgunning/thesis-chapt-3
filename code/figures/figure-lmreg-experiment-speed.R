@@ -18,49 +18,53 @@ results_list <- readRDS(
   file = here::here("outputs", "data", "lm-reg-speed-simulation-settings.rds")
 )
 
+
+
 time_df <- results_list$time_df
+time_dt <- data.table(time_df)
+time_dt[, ratio := time_2/time_1]
+
+
+
 time_df_lng <- melt.data.table(data.table(time_df), id.vars = c("M", "sim_rep"), measure.vars = c("time_1", "time_2"))
 time_df_lng[, minute := value / 60]
 time_df_lng[, variable := factor(variable,
                                  levels = c("time_2", "time_1"),
-                                 labels = c("\\texttt{landmarkreg()}", "\\texttt{landmark\\_reg\\_block()}"))]
-lmreg_plot <- ggplot(data = time_df_lng) +
-  aes(x = M, colour = variable, group = interaction(M, variable)) +
-  geom_boxplot(aes(y = value), outlier.size = 0.5) +
-  # scale_y_log10(breaks = c(
-  #   0.0001,
-  #   0.001,
-  #   0.01,
-  #   0.1,
-  #   1
-  # ), labels = paste(c(
-  #   0.0001,
-  #   0.001,
-  #   0.01,
-  #   0.1,
-  #   1
-  # ))) +
-  scale_y_log10() +
-  scale_x_log10(breaks = c(
-    1,
-    10,
-    100#,
-    # 1000,
-    # 10000
-  ), labels = paste(c(
-    1,
-    10,
-    100#,
-    # 1000,
-    # 10000
-  ))) +
-  labs(y = "Time (seconds)", x = "Number of Strides in Dataset", color = "Algorithm:") +
-  theme(legend.position = "bottom")
+                                 labels = c("\\texttt{fda::landmarkreg()}", "\\texttt{landmark\\_reg\\_block()}"))]
 
-lmreg_plot
+
+lm(value ~ M, data = time_df_lng[variable=="\\texttt{fda::landmarkreg()}"])
+lm(value ~ M, data = time_df_lng[variable=="\\texttt{landmark\\_reg\\_block()}"])
+
+p1 <- ggplot(data = time_df_lng) +
+  aes(x = M, colour = variable, group = interaction(M, variable)) +
+  geom_boxplot(aes(y=value), width =20, outlier.size = 0.75) +
+  theme(legend.position = c(0.35, 0.925),
+        legend.background = element_blank(),
+        legend.title = element_blank()) +
+  labs(x = "Number of Strides in Dataset",
+       y = "Computation Time (seconds)") +
+  scale_x_continuous(breaks = unique(time_df$M))
+p1
+
+
+p2 <- ggplot(data = time_dt) +
+  aes(x = factor(M), y = ratio, group = M) +
+  geom_boxplot(outlier.size = 0.9) +
+  labs(x = "Number of Strides in Dataset",
+       y = "Ratio of Computation Times")
+p2
+
+
+(combined_plot <- ggpubr::ggarrange(p1, p2))
 
 tikz(file.path(plots_path, "lmreg-speed-plot.tex"),
-     width = 0.55 * doc_width_inches, 
-     height = 0.575 *  doc_width_inches)
-lmreg_plot
+     width = 1 * doc_width_inches, 
+     height = 0.5 *  doc_width_inches)
+combined_plot
 dev.off()
+
+
+
+
+
