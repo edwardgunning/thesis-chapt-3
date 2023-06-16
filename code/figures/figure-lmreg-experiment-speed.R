@@ -40,11 +40,14 @@ p1 <- ggplot(data = time_df_lng) +
   aes(x = M, colour = variable, group = interaction(M, variable)) +
   geom_boxplot(aes(y=value), width =20, outlier.size = 0.75) +
   theme(legend.position = c(0.35, 0.925),
-        legend.background = element_blank(),
-        legend.title = element_blank()) +
+        legend.text = element_text(size = 8.5),
+        legend.title = element_blank(),
+        legend.box.margin = margin(t = -15,0,0,0),
+        legend.background = element_rect(colour = "lightgrey")) +
   labs(x = "Number of Strides in Dataset",
        y = "Computation Time (seconds)") +
-  scale_x_continuous(breaks = unique(time_df$M))
+  scale_x_continuous(breaks = unique(time_df$M)) +
+  theme(legend.key.size = unit(0.5, "cm"))
 p1
 
 
