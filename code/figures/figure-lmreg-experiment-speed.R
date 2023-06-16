@@ -39,16 +39,17 @@ lm(value ~ M, data = time_df_lng[variable=="\\texttt{landmark\\_reg\\_block()}"]
 p1 <- ggplot(data = time_df_lng) +
   aes(x = M, colour = variable, group = interaction(M, variable)) +
   geom_boxplot(aes(y=value), width =20, outlier.size = 0.75) +
-  theme(legend.position = c(0.35, 0.925),
-        legend.text = element_text(size = 8.5),
+  theme(legend.position = c(0.35, 0.9),
+        legend.text = element_text(size = 7.5),
         legend.title = element_blank(),
-        legend.box.margin = margin(t = -15,0,0,0),
+        legend.margin = margin(t=0, r =0, b = 5, l = 5),
+        #legend.box.margin = margin(t = -30,r = -10,l = -10,0),
         legend.background = element_rect(colour = "lightgrey")) +
   labs(x = "Number of Strides in Dataset",
        y = "Computation Time (seconds)") +
   scale_x_continuous(breaks = unique(time_df$M)) +
-  theme(legend.key.size = unit(0.5, "cm"))
-p1
+  theme(legend.key.size = unit(0.4, "cm"))
+  p1
 
 
 p2 <- ggplot(data = time_dt) +
@@ -59,13 +60,16 @@ p2 <- ggplot(data = time_dt) +
 p2
 
 
-(combined_plot <- ggpubr::ggarrange(p1, p2))
+(combined_plot <- ggpubr::ggarrange(p1, p2, labels = c("(a)", "(b)"), font.label = list(size = 8)))
 
 tikz(file.path(plots_path, "lmreg-speed-plot.tex"),
      width = 1 * doc_width_inches, 
-     height = 0.5 *  doc_width_inches)
+     height = 0.5 *  doc_width_inches, standAlone = TRUE)
 combined_plot
 dev.off()
+
+tinytex::lualatex(file.path(plots_path, "lmreg-speed-plot.tex"))
+
 
 
 
