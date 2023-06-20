@@ -7,12 +7,12 @@ plots_path <- here::here("outputs", "plots")
 # Some settings for the plots: --------------------------------------------
 theme_gunning() # use default theme
 theme_update(
-  axis.text = element_text(size = 9.5),
-  axis.title = element_text(size = 9.5),
-  strip.text = element_text(size = 9.5),
-  plot.title = element_text(size = 10.5),
-  legend.text = element_text(size = 9.5),
-  legend.title = element_text(size = 9.5)
+  axis.text = element_text(size = 10),
+  axis.title = element_text(size = 10),
+  strip.text = element_text(size = 10),
+  plot.title = element_text(size = 11),
+  legend.text = element_text(size = 10),
+  legend.title = element_text(size = 10)
 )
 # rough guide for sizing of plot outputs:
 doc_width_cm <- 16
@@ -56,7 +56,7 @@ p<-ggplot(data = plot_dt_lng) +
   xlab("Longitudinal Time ($T$)") +
   scale_color_manual(values = c("red3", "#619CFF"), name = "Participant ID:") +
   scale_linetype_manual(values = c(1, 4), name = "Side:") +
-  scale_shape_manual(values = c(20, 17), , name = "Side:") +
+  scale_shape_manual(values = c(20, 17),  name = "Side:") +
   scale_x_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1), labels = paste(c(0, 0.25, 0.5, 0.75, 1))) +
   theme(legend.position = "bottom",
         legend.title = element_text(face = "bold"),
@@ -64,7 +64,7 @@ p<-ggplot(data = plot_dt_lng) +
 p
 tikz(file.path(plots_path, "phase-plot.tex"),
      width = 1.2 * doc_width_inches, 
-     height = 0.7 * doc_width_inches,
+     height = 0.675 * doc_width_inches,
      standAlone = TRUE)
 print(p)
 dev.off()
