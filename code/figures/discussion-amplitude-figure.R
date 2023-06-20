@@ -42,7 +42,7 @@ plot_dt_lng <- melt.data.table(data = basis_coef_subset,
 
 plot_dt_lng[, participant_id := stringr::str_remove(subject_id, "P_400")]
 plot_dt_lng[, variable := factor(variable, levels = c("peak_kfa_time", "stride_length_frames"),
-                                 labels = c("Peak KFA Timing ($\\%$ of Stride)", "Stride Length (Frames)"))]
+                                 labels = c("\\textbf{(a)} Peak KFA Timing ($\\%$ of Stride)", "\\textbf{(b)} Stride Length (Frames)"))]
 plot_dt_lng[, side := factor(side, levels = c("left", "right"), labels = c("Left", "Right"))]
 # warning -- stride length frames is changed from integer to double, that's ok!
 p<-ggplot(data = plot_dt_lng) +
@@ -64,7 +64,7 @@ p<-ggplot(data = plot_dt_lng) +
 p
 tikz(file.path(plots_path, "phase-plot.tex"),
      width = 1.2 * doc_width_inches, 
-     height =0.6 * doc_width_inches,
+     height = 0.7 * doc_width_inches,
      standAlone = TRUE)
 print(p)
 dev.off()
