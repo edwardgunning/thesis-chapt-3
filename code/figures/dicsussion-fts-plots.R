@@ -64,8 +64,9 @@ basis_coef_subset_lng[, t := as.numeric(stringr::str_remove(t, "eval_"))]
        y ="Angle ($^{\\circ}$)",
        x = "Normalised Time ($\\%$ of Stride)",
        title = "Rainbow Plot") +
-  scale_x_continuous(expand = c(0.02,0.02)) +
+    scale_x_continuous(expand = c(0, 0)) +
   theme(legend.position = "bottom",
+        plot.margin = margin(r = 12, t = 10, b = 10, l = 10, unit = "pt"),
         legend.title = element_text(vjust = 0.8, hjust = 0.5))+
     guides(colour = guide_colourbar(title.position = "top")))
 
@@ -88,13 +89,14 @@ basis_coef_subset_lng[, t := as.numeric(stringr::str_remove(t, "eval_"))]
        x = "Normalised Time ($\\%$ of Stride)",
        title = "Image Plot") +
   theme(legend.position = "bottom", 
+        plot.margin = margin(r = 12, t = 10, b = 10, l = 10, unit = "pt"),
         legend.title = element_text(vjust = 0.8, hjust = 0.5)) +
   guides(fill = guide_colourbar(title.position = "top"))) 
 
 ggarrange(rainbow_plot, image_plot)
 
 tikz(file.path(plots_path, "fts-plots.tex"),
-     width = 1.2 * doc_width_inches, 
+     width = 1.15 * doc_width_inches, 
      height = 0.7 * doc_width_inches,
      standAlone = TRUE)
 ggarrange(rainbow_plot, image_plot)
