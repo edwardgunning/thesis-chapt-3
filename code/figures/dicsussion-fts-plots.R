@@ -55,41 +55,50 @@ basis_coef_subset_lng <- melt.data.table(data = basis_coef_subset,
                                          value.factor = FALSE)
 basis_coef_subset_lng[, t := as.numeric(stringr::str_remove(t, "eval_"))]
 
-rainbow_plot <- ggplot(data = basis_coef_subset_lng) +
+(rainbow_plot <- ggplot(data = basis_coef_subset_lng) +
   aes(x = t, y = angle, group = stride_num, colour = stride_num) +
   geom_line() +
-  scale_color_gradientn(colours = rainbow(10)) +
+  scale_color_gradientn(colours = rainbow(10),
+                        breaks = c(1, 20, 40, 60, 80, 100)) +
   labs(colour = "Stride Number:", 
        y ="Angle ($^{\\circ}$)",
        x = "Normalised Time ($\\%$ of Stride)",
        title = "Rainbow Plot") +
   scale_x_continuous(expand = c(0.02,0.02)) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        legend.title = element_text(vjust = 0.8, hjust = 0.5))+
+    guides(colour = guide_colourbar(title.position = "top")))
 
 
 
-image_plot <- ggplot(data = basis_coef_subset_lng) +
+(image_plot <- ggplot(data = basis_coef_subset_lng) +
   aes(x = t, y = stride_num, fill = angle) +
   geom_tile() +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_viridis_c(option = "A", direction = -1, breaks = c(0, 25, 50, 75, 100),
-                       labels = c(0, 25, 50, 75, 100)) +
+  scale_fill_viridis_c(option = "A",
+                       direction = -1,
+                       breaks = c(0, 30, 60, 90),
+                       labels = c(0, 30, 60, 90),
+                       ) +
   theme(panel.border = element_rect(colour = "lightgrey"),
         axis.ticks = element_line(colour = "lightgrey")) +
   labs(y = "Stride Number", 
-       fill ="Angle ($^{\\circ}$):",
+       fill = "Angle ($^{\\circ}$):",
        x = "Normalised Time ($\\%$ of Stride)",
        title = "Image Plot") +
-  theme(legend.position = "bottom")
-  
+  theme(legend.position = "bottom", 
+        legend.title = element_text(vjust = 0.8, hjust = 0.5)) +
+  guides(fill = guide_colourbar(title.position = "top"))) 
+
 ggarrange(rainbow_plot, image_plot)
 
 tikz(file.path(plots_path, "fts-plots.tex"),
      width = 1.2 * doc_width_inches, 
-     height = 0.675 * doc_width_inches,
+     height = 0.7 * doc_width_inches,
      standAlone = TRUE)
 ggarrange(rainbow_plot, image_plot)
 dev.off()
 
+setwd(dir = plots_path)
 tinytex::lualatex(file.path(plots_path, "fts-plots.tex"))
