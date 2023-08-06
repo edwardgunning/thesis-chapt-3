@@ -53,6 +53,20 @@ screen_index[, `:=`(
 # create longitudinal time variable for each subject.
 risc1_dt[, long_time := (frame_num - min(frame_num)) / max(frame_num),
          by = subject_id]
+
+# Create dataset of measurement times:
+long_time_dt <- risc1_dt[, .(run_duration = round((max(frame_num) - min(frame_num)) / 200)), by = subject_id]
+fwrite(long_time_dt,
+       file = here::here("outputs",
+                         "data",
+                         "run_duration.csv"))
+
+here::here("outputs",
+           "data",
+           "run_duration.csv")
+
+
+
 # Inspect data new columns ------------------------------------------------
 risc1_dt[, skimr::skim(.SD),
          .SDcols = c("subject_id", "side", "stride_num",

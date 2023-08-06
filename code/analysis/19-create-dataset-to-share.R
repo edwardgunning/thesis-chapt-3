@@ -32,9 +32,6 @@ bspl80 <- fda::create.bspline.basis(
   nbasis = 80,
   norder = 4)
 
-
-
-
 ## Do smoothing + time normalisation in one step --------------------------
 
 # Count non na values in first row... i.e. get stride length
