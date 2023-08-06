@@ -22,7 +22,7 @@ This repository contains the code for Chapter 3 of Edward Gunning's Ph.D. thesis
    * 📁 <b>[data](outputs/data/)</b> -- intermediate copies of the dataset saved at various stages of the analysis (<i>not publicly available</i>).
    * 📁 <b>[plots](outputs/plots/)</b> -- outputs of figures made during the process. Most are outputted as `.tex` files and are compiled in the [](outputs/plots/figures.tex) master file. Some are compiled locally in `R` so a `.pdf` and `.tex` version is stored.
   * 📁 <b>[tables](outputs/tables/)</b> tables created at different stages of the process.
-* :open_file_folder: <b>[data](data/)</b> initial copies of the raw datasets (<i>not publicly available</i>)
+* :open_file_folder: <b>[data](data/)</b> -- initial copies of the raw datasets (<i>not publicly available</i>)
 
 ## Contact
 

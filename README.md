@@ -32,7 +32,7 @@ RISC dataset for analysis.
     locally in `R` so a `.pdf` and `.tex` version is stored.
   - 📁 <b>[tables](outputs/tables/)</b> tables created at different
     stages of the process.
-- :open_file_folder: <b>[data](data/)</b> initial copies of the raw
+- :open_file_folder: <b>[data](data/)</b> – initial copies of the raw
   datasets (<i>not publicly available</i>)
 
 ## Contact
