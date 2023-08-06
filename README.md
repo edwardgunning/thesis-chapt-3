@@ -19,5 +19,22 @@ RISC dataset for analysis.
     presented in chapter 3 of the thesis.
   - 📁 <b>[functions](code/functions/)</b> – custom functions written
     for data processing and preparation.
-- :open_file_folder: <b>outputs</b>
-  - 
+- :open_file_folder: <b>[outputs](outputs/)</b>
+  - 📁
+    <b>[basis-expansion-diagram](outputs/basis-expansion-diagram/)</b> –
+    files to produce the flow chart for the basis expansion.
+  - 📁 <b>[data](outputs/data/)</b> – intermediate copies of the dataset
+    saved at various stages of the analysis (<i>not publicly
+    available</i>).
+  - 📁 <b>[plots](outputs/plots/)</b> – outputs of figures made during
+    the process. Most are outputted as `.tex` files and are compiled in
+    the [](outputs/plots/figures.tex) master file. Some are compiled
+    locally in `R` so a `.pdf` and `.tex` version is stored.
+  - 📁 <b>[tables](outputs/tables/)</b> tables created at different
+    stages of the process.
+- :open_file_folder: <b>[data](data/)</b> initial copies of the raw
+  datasets (<i>not publicly available</i>)
+
+## Contact
+
+📧 <Edward.Gunning@ul.ie>
