@@ -79,6 +79,6 @@ table1 <- stringr::str_replace(table1, pattern = "N & Pct.",
 table1 <- stringr::str_replace(table1, pattern = "Mean & Std. Dev.", 
                                replacement = "\\\\textbf{Mean} & \\\\textbf{Std. Dev.}")
 table1 <- stringr::str_replace(table1, pattern = "\\\\end\\{tabular\\}\n\\\\end\\{table\\}",
-                               replacement = "\\\\end\\{tabular\\}\\\n\\\\caption\\{Summary characteristics of the participants of the RISC dataset that are included in the analyses in subsequent chapters of this thesis.\\}\n\\\\label\\{tab:tab1.\\}\n\\\\end\\{table\\}")
+                               replacement = "\\\\end\\{tabular\\}\\\n\\\\caption\\{Summary characteristics of the participants in the RISC dataset that are included in the analyses in subsequent chapters of this thesis.\\}\n\\\\label\\{tab:tab1chpt3.\\}\n\\\\end\\{table\\}")
 writeLines(text = table1, con = file.path(outputs_path, "tables", "table_1_characteristics.tex"))
 
